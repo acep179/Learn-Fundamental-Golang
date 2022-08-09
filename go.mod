@@ -1,4 +1,4 @@
-module dumbmerch
+module percobaan
 
 go 1.18
 
