@@ -10,6 +10,7 @@ import (
 // Declare UserRepository interface here ...
 type UserRepository interface {
 	FindUsers() ([]models.User, error)
+	// nama function dan nilai yg dikembalikan
 	GetUser(ID int) (models.User, error)
 }
 
