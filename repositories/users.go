@@ -57,5 +57,11 @@ func (r *repository) GetUser(ID int) (models.User, error) {
 	var user models.User
 	err := r.db.Raw("SELECT * FROM users WHERE id=?", ID).Scan(&user).Error
 
+	//ctt ketika kita membutuhkan value secara dinamis, maka kita cukup menggunakan tanda: tanda-tanya. Contohnya seperti id di atas yg secara dinamis diambil dari parameter ID. Maka, untuk id-nya kita tuliskan id=? dan simbol tanda tanya tsb akan diisikan dengan isi dari ID setelah tanda koma
+
+	//ctt Jika kita membutuhkan lebih dari satu value dinamis, maka kita pun dapat melakukannya. Adapun caranya adalah sama. Yaitu, dengan memberikan tanda tanya. Adapun peletakkan "isi"-nya itu harus secara berurutan. Lihat contoh di bawah
+
+	//ctt: Contoh yang benar: Raw("SELECT * FROM users WHERE id=? name=?", ID, name). Kita tidak boleh meletakkannya secara tidak berurutan karena nilinya akan tertukar. CONTOH yang SALAH: Raw("SELECT * FROM users WHERE id=? name=?", name, ID) => seharusnya ID duluan barulah name
+
 	return user, err
 }

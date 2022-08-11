@@ -57,6 +57,7 @@ func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	//ctt: strconv.Atoi adalah cara untuk meng-convert string ke int karena setiap parameter yg kita dapatkan akan berupa string sedangkan parameter id yg kita butuhkan harus berupa int
 
 	user, err := h.UserRepository.GetUser(id)
 	if err != nil {
@@ -73,6 +74,13 @@ func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
 
 // Declare convertResponse function here ...
 func convertResponse(u models.User) usersdto.UserResponse {
+
+	//ctt pada function convertResponse ini, kita membutuhkan parameter models.User. Mengapa? Karena, setiap data yang dikirmkan dari response repository itu dari models.User. Sehingga, semua data yg dikirimkan akan kita tampung terlebih dahulu
+
+	//ctt akan tetapi, ketika kita kembalikan datanya, alias ketika kita tampilkan datanya, maka akan kita tampilkan dalam bentuk usersdto.UserResponse. Sehingga, format yg ditampilkan bukan lagi format models.User akan tetapi format userdto.UserResponse.
+
+	//ctt Adapun cara utk mengisi struck dari userdto adalah dengan cara di bawah ini. Cara bacanya adalah ID pada userdto akan diisikan dengan ID dari models.User
+
 	return usersdto.UserResponse{
 		ID:       u.ID,
 		Name:     u.Name,
