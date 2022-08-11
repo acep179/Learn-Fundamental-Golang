@@ -17,9 +17,12 @@ var DB *gorm.DB
 // Connection Database
 func DatabaseInit() {
 	var err error
+
 	//ctt dsn := "{USER}:{PASSWORD}@tcp({HOST}:{PORT})/{DATABASE}?charset=utf8mb4&parseTime=True&loc=Local"
+
 	dsn := "root:@tcp(localhost:3306)/dumbmerch?charset=utf8mb4&parseTime=True&loc=Local"
-	//ctt dsn adalah destination yg berisikan destinasi database kita. Dns tsb diisikan dengan user, password, dst. Jika pada akun user kita tidak menggunakan password, maka kita boleh mengosongkan passwordnya.
+
+	//ctt dsn adalah destination yg berisikan destinasi database kita. Dsn tsb diisikan dengan user, password, dst. Jika pada akun user kita tidak menggunakan password, maka kita boleh mengosongkan passwordnya.
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 

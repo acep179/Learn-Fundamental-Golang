@@ -50,6 +50,8 @@ func (r *repository) FindUsers() ([]models.User, error) {
 //ctt Itulah mengapa ketika kita ingin melakukan FindUsers() kita membutuhkan kerangkanya itu tadi
 //ctt Sama seperti penjelasan sebelumnya bahwa ketika kita membuat function, lalu kita jadikan ia sebagai method maka bisa kita tambahkan ... (r *repository) => r yg mempointing repository struct
 
+//ctt untuk repository-nya ini, kita biarkan agar ia mengambil semua datanya termasuk created_at dan updated_at. Adapun agar data yang ditampilkannya sesuai dengan yang telah kita atur pada DTO, maka hal tersebut akan kita atur pada Handler-nya.
+
 // Create GetUser method here ...
 func (r *repository) GetUser(ID int) (models.User, error) {
 	var user models.User
