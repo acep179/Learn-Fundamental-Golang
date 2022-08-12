@@ -20,6 +20,10 @@ func HandlerUser(UserRepository repositories.UserRepository) *handler {
 	return &handler{UserRepository}
 }
 
+//! Tidak ada yang berbeda pada Handler Users ini maupun pada routes-nya, masih sama saja sebagaimana sebelumnya. Adapun perbedaan hanya terdapat pada repositories/users.go
+
+//ctt inilah salah satu kelebihan jika kita menggunakan beberapa layering. Sehingga, ketika kita ingin melakukan update, selama data yang diberi dan diterima masih sama, maka kita cukup mengubah layer yang akan di-update-nya saja, adapun pada kasus ini contohnya adalah kita hanya akan mengubah repoository-nya saja.
+
 func (h *handler) FindUsers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
