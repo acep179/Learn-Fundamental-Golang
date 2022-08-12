@@ -71,7 +71,7 @@ func (h *handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 
-		//ctt kodingan di atas adalah utk mengambil value-nya sekaligus memvalidasi apakah yang dikirmkan sudah sesuai dengan struck pada usersdto.CreateUserRequest
+		//ctt kodingan di atas adalah utk mengambil value-nya sekaligus memvalidasi apakah yang dikirimkan sudah sesuai dengan struck pada usersdto.CreateUserRequest terkait jenis datanya
 
 		w.WriteHeader(http.StatusBadRequest)
 
@@ -90,7 +90,7 @@ func (h *handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	err := validation.Struct(request)
 
-	//ctt err nya didapatkan dari validation-nya adapun yg divalidasi adalah struck-nya request (.Struck(request))
+	//ctt err nya didapatkan dari validation-nya adapun yg divalidasi adalah terkait required-nya
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
