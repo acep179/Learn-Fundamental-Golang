@@ -148,6 +148,9 @@ func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
+	//ctt sama seperti UpdateUser hanya saja kita tidak akan mengambil dari respon-nya
+
+	//ctt di bawah adalah proses pengambilan data user berdasarkan id-nya
 	user, err := h.UserRepository.GetUser(id)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -156,6 +159,7 @@ func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//ctt di bawah ini adalah proses penghapusan data user yang membutuhkan dua parameter
 	data, err := h.UserRepository.DeleteUser(user, id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -167,6 +171,8 @@ func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: convertResponse(data)}
 	json.NewEncoder(w).Encode(response)
+
+	//todo setelah ini barulah kita tambahkan route-nya
 }
 
 func convertResponse(u models.User) usersdto.UserResponse {
