@@ -112,9 +112,16 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
 	//ctt sama seperti Method Create, data yang diterima oleh repository harus berupa models.User sedangkan data yang kita terima masih dalam bentuk dto UpdateUser. Maka dari itu, kita perlu meng-convertnya
-	//ctt Akan tetapi, berbeda dengan create yg harus diisi semua field-nya, Method Update tidak mengharuskan kita mengisi seluruh field-nya. Maka dari itu, kita buatkan struck models.User-nya dengan isinya kosong. Adapun isinya akan kita isikan dengan menggunakan pengkondisian di bawah.
+	//ctt Akan tetapi, berbeda dengan create yg harus diisi semua field-nya, Method Update tidak mengharuskan kita mengisi seluruh field-nya.
+	// ctt Maka dari itu, kita buatkan struck models.User-nya dengan isinya kosong. Adapun isinya akan kita isikan dengan menggunakan pengkondisian di bawah.
 
 	user := models.User{}
+
+	//ctt Sebelum melakukan pengkondisian, kita tampilkan terlebih dahulu isi dari data user sebelumnya agar field yang tidak diisi, secara otomatis akan diisi oleh data sebelumnya.
+
+	//ctt Jadi, cara bacanya adalah, kita buatkan user-nya berdasarkan struct pada model.User. Kemudian, kita isikan dengan data sebelumnya. Nantinya, jika ada perubahan maka kita gantikan isi sebelumnya dengan perubahan yang ada
+
+	user, _ = h.UserRepository.GetUser(id)
 
 	if request.Name != "" {
 		user.Name = request.Name
