@@ -13,6 +13,9 @@ type UserRepository interface {
 	CreateUser(user models.User) (models.User, error)
 	// Declare UpdateUser interface here ...
 	UpdateUser(user models.User, ID int) (models.User, error)
+	//ctt jika kita berbicara terkait update, tentu saja kita membutuhkan dua parameter sekaligus. Adapun parameter yg dibutuhkan adalah ID dari data yang ingin kita ubah isinya dan isi dari data tersebut agar kita dapat menampilkan data yang telah ada sebelumnya, sebelum kita update.
+
+	//todo sekarang, kita buatkan Method UpdateUser-nya di bawah
 }
 
 type repository struct {
@@ -43,8 +46,8 @@ func (r *repository) CreateUser(user models.User) (models.User, error) {
 	return user, err
 }
 
-// Write UpdateUser method here ...
-// Write this code
+//todo Write UpdateUser method here ...
+//todo Write this code
 func (r *repository) UpdateUser(user models.User, ID int) (models.User, error) {
 	err := r.db.Raw("UPDATE users SET name=?, email=?, password=? WHERE id=?", user.Name, user.Email, user.Password, ID).Scan(&user).Error
 
