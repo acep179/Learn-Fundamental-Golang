@@ -37,5 +37,11 @@ func (r *repository) GetUser(ID int) (models.User, error) {
 func (r *repository) CreateUser(user models.User) (models.User, error) {
 	// Using "Create" method here ...
 
+	//todo Untuk menambahkan data, kita gunakan Method Create
+
+	err := r.db.Create(&user).Error
+
+	//ctt Ketika kita jalankan, maka secara otomatis sistem akan menampilkan ID dari data yang baru saja kita tambahkan karena di dalam prosesnya sudah di-handle oleh Method Create tsb
+
 	return user, err
 }
