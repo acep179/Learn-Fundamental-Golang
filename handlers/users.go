@@ -104,7 +104,15 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//ctt kodingan di atas sama seperti kodingan pada create, yang membedakannya adalah pada usersdto-nya. Karena untuk update tidak semua field harus diisi tidak seperti create yang semua field-nya harus diisi. Maka, pada usersdto-nya kita isikan dto-nya tersendiri yaitu usersdto.UpdateUserRequest
+	//ctt inilah mengapa di awal kita siapkan dua struct yg berbeda pada dto untuk create dan update
+
+	//todo Sekarang, kita perlu mengambil ID user yg akan diubah datanya dari parameter. Adapun caranya itu sama saja seperti pengambilan ID dari parameter pada Method  GET USER
+
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+
+	//ctt sama seperti Method Create, data yang diterima oleh repository harus berupa models.User sedangkan data yang kita terima masih dalam bentuk dto UpdateUser. Maka dari itu, kita perlu meng-convertnya
+	//ctt Akan tetapi, berbeda dengan create yg harus diisi semua field-nya, Method Update tidak mengharuskan kita mengisi seluruh field-nya. Maka dari itu, kita buatkan struck models.User-nya dengan isinya kosong. Adapun isinya akan kita isikan dengan menggunakan pengkondisian di bawah.
 
 	user := models.User{}
 
@@ -120,6 +128,8 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		user.Password = request.Password
 	}
 
+	//ctt Karena pada kontrak Method UpdateUser pada repository membutuhkan dua parameter yaitu data user yg akan diubah dan id-nya, maka kodingan di bawah adalah untuk mengirimkan data user beserta id-nya ke repository
+
 	data, err := h.UserRepository.UpdateUser(user, id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -131,6 +141,8 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: convertResponse(data)}
 	json.NewEncoder(w).Encode(response)
+
+	//todo Sekarang, kita atur routes-nya
 }
 
 func convertResponse(u models.User) usersdto.UserResponse {
