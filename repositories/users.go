@@ -12,6 +12,7 @@ type UserRepository interface {
 	GetUser(ID int) (models.User, error)
 	CreateUser(user models.User) (models.User, error)
 	// Declare UpdateUser interface here ...
+	UpdateUser(user models.User, ID int) (models.User, error)
 }
 
 type repository struct {
@@ -19,7 +20,7 @@ type repository struct {
 }
 
 func RepositoryUser(db *gorm.DB) *repository {
-	return &repository{db} 
+	return &repository{db}
 }
 
 func (r *repository) FindUsers() ([]models.User, error) {
@@ -37,9 +38,15 @@ func (r *repository) GetUser(ID int) (models.User, error) {
 }
 
 func (r *repository) CreateUser(user models.User) (models.User, error) {
-	err := r.db.Exec("INSERT INTO users(name,email,password,created_at,updated_at) VALUES (?,?,?,?,?)",user.Name,user.Email, user.Password, time.Now(), time.Now()).Error
+	err := r.db.Exec("INSERT INTO users(name,email,password,created_at,updated_at) VALUES (?,?,?,?,?)", user.Name, user.Email, user.Password, time.Now(), time.Now()).Error
 
 	return user, err
 }
 
 // Write UpdateUser method here ...
+// Write this code
+func (r *repository) UpdateUser(user models.User, ID int) (models.User, error) {
+	err := r.db.Raw("UPDATE users SET name=?, email=?, password=? WHERE id=?", user.Name, user.Email, user.Password, ID).Scan(&user).Error
+
+	return user, err
+}
