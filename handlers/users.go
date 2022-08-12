@@ -103,6 +103,9 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+
+	//ctt Kita tetap harus mengambil ID dari paramter untuk mengambil data user yang akan diubah yang nantinya data tersebut akan menjadi nilai default ketika field tidak diisikan sebagaimana di bawah:
+
 	user, err := h.UserRepository.GetUser(int(id))
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -122,6 +125,10 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	if request.Password != "" {
 		user.Password = request.Password
 	}
+
+	//ctt Kita juga perlu membuat pengkondisian untuk mengisikan datanya.
+
+	//ctt Perbedaannya hanya satu saja yaitu kita tidak perlu lagi mengirimkan ID ke Repository sebagaimana contoh di bawah yaitu pada h.UserRepository.UpdateUser(user)
 
 	data, err := h.UserRepository.UpdateUser(user)
 	if err != nil {
