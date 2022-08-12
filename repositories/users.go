@@ -13,6 +13,7 @@ type UserRepository interface {
 	CreateUser(user models.User) (models.User, error)
 	UpdateUser(user models.User, ID int) (models.User, error)
 	// Declare DeleteUser interface here ...
+	DeleteUser(user models.User, ID int) (models.User, error)
 }
 
 type repository struct {
@@ -20,7 +21,7 @@ type repository struct {
 }
 
 func RepositoryUser(db *gorm.DB) *repository {
-	return &repository{db} 
+	return &repository{db}
 }
 
 func (r *repository) FindUsers() ([]models.User, error) {
@@ -38,15 +39,20 @@ func (r *repository) GetUser(ID int) (models.User, error) {
 }
 
 func (r *repository) CreateUser(user models.User) (models.User, error) {
-	err := r.db.Exec("INSERT INTO users(name,email,password,created_at,updated_at) VALUES (?,?,?,?,?)",user.Name,user.Email, user.Password, time.Now(), time.Now()).Error
+	err := r.db.Exec("INSERT INTO users(name,email,password,created_at,updated_at) VALUES (?,?,?,?,?)", user.Name, user.Email, user.Password, time.Now(), time.Now()).Error
 
 	return user, err
 }
 
 func (r *repository) UpdateUser(user models.User, ID int) (models.User, error) {
-	err := r.db.Raw("UPDATE users SET name=?, email=?, password=? WHERE id=?", user.Name, user.Email, user.Password,ID).Scan(&user).Error
+	err := r.db.Raw("UPDATE users SET name=?, email=?, password=? WHERE id=?", user.Name, user.Email, user.Password, ID).Scan(&user).Error
 
 	return user, err
 }
 
 // Crete DeleteUser method here ...
+func (r *repository) DeleteUser(user models.User, ID int) (models.User, error) {
+	err := r.db.Raw("DELETE FROM users WHERE id=?", ID).Scan(&user).Error
+
+	return user, err
+}
