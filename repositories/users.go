@@ -14,6 +14,7 @@ type UserRepository interface {
 	UpdateUser(user models.User, ID int) (models.User, error)
 	// Declare DeleteUser interface here ...
 	DeleteUser(user models.User, ID int) (models.User, error)
+	//ctt Respon yang baik untuk sebuah delete bukan hanya menampilkan data delete successfull, akan tetapi juga menampilkan data mana yang telah dihapus. Maka dari itu, pada parameternya kita membutuhkan models.User beserta id-nya
 }
 
 type repository struct {
