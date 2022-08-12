@@ -48,8 +48,13 @@ func (r *repository) UpdateUser(user models.User) (models.User, error) {
 	return user, err
 }
 
+//todo Masih sama seperti UpdateUser, yaitu kita sudah tidak membutuhkan parameter ID lagi. Akan tetapi, kita tetap perlu menampilkan data usernya terlebih dahulu pada handler sebagaimana pada UpdateUser.
+
 func (r *repository) DeleteUser(user models.User) (models.User, error) {
 	// Using "Delete" method here ...
+	err := r.db.Delete(&user).Error
+
+	//ctt Untuk melakukan Delete, kita cukup menggunakan Method Delete()
 
 	return user, err
 }
